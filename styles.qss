@@ -1,0 +1,268 @@
+/* ============================================================
+   Uni Grade Calculator — Dark Theme (v3, tabbed)
+   This is a Qt Style Sheet (QSS): CSS-like syntax that Qt parses.
+   Selectors:
+     QWidget          -> matches every widget of that class
+     QPushButton#name -> matches only the widget with objectName "name"
+     :hover / :focus   -> pseudo-states, same idea as CSS
+     ::sub-element     -> a named piece inside a compound widget,
+                          e.g. QTabBar::tab is "the tab part of a tab bar"
+
+   Palette:
+     Base            #15161c   near-black, slightly cooler than pure black
+     Surface         #1c1d25   window background
+     Panel/Input     #23252f   anything you type or click into
+     Border          #34363f   default border (barely-there separation)
+     Border (active) #40424e   hover / lighter separation
+     Text primary    #eceef2   headings, values
+     Text secondary  #a8abb8   body / field labels
+     Text muted      #6f7280   placeholders, disabled, status text
+     Accent (blue)   #5b8dfa   primary action, links, focus ring
+     Success         #34d399   emerald — softer than pure green, fits dark UI
+     Danger          #f87171   coral-red — softer than pure red, less alarming
+   ============================================================ */
+
+/* Base background + default text/font for every widget in the window */
+QWidget {
+    background-color: #1c1d25;
+    color: #eceef2;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+QMainWindow {
+    background-color: #1c1d25;
+}
+
+/* --- Labels --- */
+QLabel {
+    color: #a8abb8;
+    background-color: transparent;
+}
+
+/* Main title */
+QLabel#title {
+    color: #f5f6f9;
+    border-bottom: 2px solid #5b8dfa;
+    padding-bottom: 8px;
+}
+
+/* Column headers (Assessment Name / Marks / Max Marks / Weighting) */
+QLabel#columnHeader {
+    color: #6f7280;
+    font-weight: bold;
+}
+
+/* Field labels (Goal grade / Ungraded percentage) */
+QLabel#fieldLabel {
+    color: #cdd0da;
+}
+
+/* Result display */
+QLabel#resultPreamble {
+    color: #8b8ea0;
+}
+
+QLabel#resultValue {
+    color: #5b8dfa;
+}
+
+QLabel#resultGrade {
+    color: #f5f6f9;
+}
+
+/* Small status text (save/load confirmations) */
+QLabel#statusLabel {
+    color: #6f7280;
+}
+
+/* --- Text inputs --- */
+QLineEdit {
+    background-color: #23252f;
+    border: 1px solid #34363f;
+    border-radius: 7px;
+    padding: 6px 10px;
+    color: #f2f3f6;
+    selection-background-color: #5b8dfa;
+    selection-color: #15161c;
+}
+
+QLineEdit:hover {
+    border: 1px solid #40424e;
+}
+
+QLineEdit:focus {
+    border: 1px solid #5b8dfa;
+    background-color: #262834;
+}
+
+QLineEdit::placeholder {
+    color: #575a68;
+}
+
+/* --- Buttons --- */
+QPushButton#calcButton {
+    background-color: #5b8dfa;
+    color: #10111a;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+QPushButton#calcButton:hover {
+    background-color: #6f9bfb;
+}
+
+QPushButton#calcButton:pressed {
+    background-color: #4877e0;
+}
+
+QPushButton#saveButton {
+    background-color: #23252f;
+    color: #cdd0da;
+    border: 1px solid #34363f;
+    border-radius: 8px;
+    padding: 11px;
+    font-weight: bold;
+}
+
+QPushButton#saveButton:hover {
+    background-color: #292b36;
+    border: 1px solid #40424e;
+}
+
+QPushButton#saveButton:pressed {
+    background-color: #1c1d25;
+}
+
+/* ============================================================
+   Tabs — subjects live here now, so this is prime real estate
+   ============================================================ */
+
+/* The content area behind each tab's page. Giving it a slightly
+   lighter shade than the window makes each subject's page feel
+   like a distinct "card" sitting under the tab strip. */
+QTabWidget::pane {
+    background-color: #1c1d25;
+    border: 1px solid #34363f;
+    border-radius: 10px;
+    top: -1px; /* tucks the pane up under the tab strip, no seam */
+}
+
+/* The strip the tabs themselves sit in */
+QTabBar {
+    background-color: transparent;
+    qproperty-drawBase: 0; /* stops Qt drawing its own default frame under the tabs */
+}
+
+/* Each individual tab, unselected */
+QTabBar::tab {
+    background-color: #1c1d25;
+    color: #8b8ea0;
+    border: 1px solid #34363f;
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 8px 14px;
+    margin-right: 4px;
+    min-width: 90px;
+    font-weight: 600;
+}
+
+/* Hovering a tab you're not currently on */
+QTabBar::tab:hover {
+    background-color: #23252f;
+    color: #cdd0da;
+    border: 1px solid #40424e;
+    border-bottom: none;
+}
+
+/* The active/selected tab — brightest element in the strip so it's
+   obvious at a glance which subject you're looking at */
+QTabBar::tab:selected {
+    background-color: #23252f;
+    color: #f5f6f9;
+    border: 1px solid #5b8dfa;
+    border-bottom: none;
+}
+
+/* A thin accent line under the selected tab, echoing the underline
+   the old single-page title used to have */
+QTabBar::tab:selected {
+    border-bottom: 2px solid #5b8dfa;
+    padding-bottom: 6px; /* compensate so text doesn't jump */
+}
+
+/* The little × close button Qt draws inside each closable tab.
+   Kept quiet by default so the tab bar doesn't look cluttered with
+   red X's — it only turns danger-red on hover, right before you
+   actually click it. */
+QTabBar::close-button {
+    image: none; /* fall through to Qt's default glyph, styled via colors below */
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 2px;
+    margin: 2px;
+}
+
+QTabBar::close-button:hover {
+    background-color: #f87171;
+}
+
+/* The "+" add-subject button docked in the tab bar's corner */
+QPushButton#addTabButton {
+    background-color: #23252f;
+    color: #a8abb8;
+    border: 1px solid #34363f;
+    border-radius: 14px; /* circular, since the button is fixed 28x28 */
+    font-weight: bold;
+    font-size: 15px;
+}
+
+QPushButton#addTabButton:hover {
+    background-color: #5b8dfa;
+    color: #10111a;
+    border: 1px solid #5b8dfa;
+}
+
+QPushButton#addTabButton:pressed {
+    background-color: #4877e0;
+    color: #10111a;
+}
+
+/* --- Message boxes (warnings/errors) --- */
+QMessageBox {
+    background-color: #1c1d25;
+}
+
+QMessageBox QLabel {
+    color: #eceef2;
+}
+
+QMessageBox QPushButton {
+    background-color: #5b8dfa;
+    color: #10111a;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 18px;
+    font-weight: bold;
+    min-width: 60px;
+}
+
+QMessageBox QPushButton:hover {
+    background-color: #6f9bfb;
+}
+
+/* The confirm dialog when closing a tab uses QMessageBox::question,
+   which by default renders a "No" button too — give it a muted,
+   non-primary look so "Yes" (destructive) doesn't visually blend
+   in with a safe default action. Qt names the buttons by role. */
+QMessageBox QPushButton[text="No"] {
+    background-color: #23252f;
+    color: #cdd0da;
+    border: 1px solid #34363f;
+}
+
+QMessageBox QPushButton[text="No"]:hover {
+    background-color: #292b36;
+    border: 1px solid #40424e;
+}
